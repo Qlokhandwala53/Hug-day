@@ -20,6 +20,7 @@ background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
 color:white;
+position:relative;
 }
 
 /* Dark overlay */
@@ -34,6 +35,22 @@ background:rgba(0,0,0,0.55);
 z-index:-1;
 }
 
+/* Tap music tag */
+.tapMusic{
+position:absolute;
+bottom:20px;
+width:100%;
+text-align:center;
+font-size:14px;
+opacity:0.8;
+animation:blink 2s infinite;
+}
+
+@keyframes blink{
+0%,100%{opacity:0.4;}
+50%{opacity:1;}
+}
+
 /* Center container */
 .container{
 position:absolute;
@@ -44,7 +61,7 @@ text-align:center;
 width:90%;
 }
 
-/* Cinematic intro */
+/* Intro */
 .intro{
 font-size:28px;
 animation:fadeIn 2s ease forwards;
@@ -55,7 +72,6 @@ from{opacity:0;}
 to{opacity:1;}
 }
 
-/* Hidden content */
 .content{
 opacity:0;
 transition:1.5s ease;
@@ -65,7 +81,6 @@ transition:1.5s ease;
 opacity:1;
 }
 
-/* Button */
 button{
 margin-top:25px;
 padding:15px 35px;
@@ -87,15 +102,14 @@ transform:scale(0.95);
 .heart{
 position:absolute;
 font-size:20px;
-animation:floatUp 5s linear infinite;
+animation:floatUp 6s linear infinite;
 }
 
 @keyframes floatUp{
 0%{transform:translateY(0);opacity:1;}
-100%{transform:translateY(-800px);opacity:0;}
+100%{transform:translateY(-900px);opacity:0;}
 }
 
-/* Hug */
 .hug{
 font-size:60px;
 animation:pop 2s forwards;
@@ -103,20 +117,19 @@ animation:pop 2s forwards;
 
 @keyframes pop{
 0%{transform:scale(0.3);opacity:0;}
-50%{transform:scale(1.4);}
+50%{transform:scale(1.3);}
 100%{transform:scale(1);opacity:1;}
 }
 
-/* Kiss */
 .kiss{
 font-size:40px;
-animation:kissMove 2s forwards;
+animation:kissMove 3s forwards;
 }
 
 @keyframes kissMove{
 0%{transform:translateY(0);opacity:0;}
 50%{opacity:1;}
-100%{transform:translateY(-150px);opacity:0;}
+100%{transform:translateY(-180px);opacity:0;}
 }
 </style>
 </head>
@@ -140,15 +153,25 @@ Something special is waiting for you... 💌
 <button onclick="startHug()">Click to Open Hug 🫶</button>
 
 </div>
-
 </div>
 
+<div class="tapMusic">🎵 Tap anywhere to start the music</div>
+
 <audio id="bgMusic" loop>
-<source src="Chhukar.mp3" type="audio/mpeg">
+<source src="Saiyara.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const herName = "Aewfa";
+const herName = "AREFA";
+let musicStarted = false;
+
+/* Start music on first tap anywhere */
+document.addEventListener("click", function(){
+if(!musicStarted){
+document.getElementById("bgMusic").play();
+musicStarted = true;
+}
+});
 
 /* Intro transition */
 setTimeout(()=>{
@@ -158,7 +181,7 @@ document.getElementById("name").innerHTML="Happy Hug Day, " + herName + " ❤️
 typingEffect();
 },3000);
 
-/* Typing effect */
+/* Slower Typing effect */
 function typingEffect(){
 const text="Every hug from me is a promise that you will never face anything alone. You are my peace, my madness, and my forever. 💖";
 let i=0;
@@ -166,13 +189,13 @@ function type(){
 if(i<text.length){
 document.getElementById("typingText").innerHTML+=text.charAt(i);
 i++;
-setTimeout(type,40);
+setTimeout(type,80);   // slowed from 40 → 80
 }
 }
 type();
 }
 
-/* Love counter */
+/* Love counter slower */
 function loveCounter(){
 let count=0;
 let interval=setInterval(()=>{
@@ -181,7 +204,7 @@ else{
 count++;
 document.getElementById("counter").innerHTML=count;
 }
-},20);
+},35);
 }
 
 /* Floating hearts */
@@ -193,35 +216,29 @@ heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"%";
 heart.style.top="100%";
 document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),5000);
-},500);
+setTimeout(()=>heart.remove(),6000);
+},700);
 }
 
 /* Hug action */
 function startHug(){
 
-// iOS music trigger
-document.getElementById("bgMusic").play();
-
 loveCounter();
 createHearts();
 
-// Hug emoji
 let hug=document.createElement("div");
 hug.className="hug";
 hug.innerHTML="🫶";
 document.querySelector(".container").appendChild(hug);
 
-// Kiss emoji
 let kiss=document.createElement("div");
 kiss.className="kiss";
 kiss.innerHTML="💋";
 document.querySelector(".container").appendChild(kiss);
 
-// WhatsApp redirect
 setTimeout(()=>{
 window.location.href="https://wa.me/918238519348";
-},4000);
+},5000);
 }
 </script>
 
